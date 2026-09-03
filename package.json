@@ -1,0 +1,279 @@
+{
+  "name": "markdown-checkbox",
+  "displayName": "Markdown Checkbox",
+  "description": "Create and toggle checkboxes in Markdown. xQx fork of PKief/vscode-extension-markdown-checkbox.",
+  "version": "1.11.1",
+  "publisher": "xQx",
+  "author": {
+    "name": "Will Lotto",
+    "email": "will.lotto@gmail.com",
+    "url": "https://github.com/will-lottkowitz-prism"
+  },
+  "engines": {
+    "vscode": "^1.75.0"
+  },
+  "scripts": {
+    "build": "webpack --mode production",
+    "changelog": "changelog-machine --config changelog.config.json",
+    "compile": "webpack --mode production",
+    "compile:dev": "webpack --mode none",
+    "compile:watch": "webpack --mode none --watch",
+    "lint": "eslint -c .eslintrc.json --ext .ts ./src/**/*.ts",
+    "test": "vitest run",
+    "version": "npm run changelog && git add CHANGELOG.md",
+    "vscode:prepublish": "npm run lint && npm run compile",
+    "pretest:integration": "npm run build && tsc -p ./ && ncp src/test/workspace out/test/workspace",
+    "test:integration": "node ./out/test/runTest.js"
+  },
+  "categories": [
+    "Other"
+  ],
+  "keywords": [
+    "markdown",
+    "todos",
+    "todo-list",
+    "checkbox"
+  ],
+  "homepage": "https://github.com/will-lottkowitz-prism/markdown-checkbox#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/will-lottkowitz-prism/markdown-checkbox.git"
+  },
+  "bugs": {
+    "url": "https://github.com/will-lottkowitz-prism/markdown-checkbox/issues"
+  },
+  "activationEvents": [
+    "onLanguage:markdown"
+  ],
+  "icon": "logo.png",
+  "galleryBanner": {
+    "color": "#37474f",
+    "theme": "dark"
+  },
+  "main": "./dist/extension",
+  "browser": "./dist/extension",
+  "license": "SEE LICENSE IN LICENSE.md",
+  "contributes": {
+    "commands": [
+      {
+        "command": "markdown-checkbox.createCheckbox",
+        "title": "Markdown: Create checkbox"
+      },
+      {
+        "command": "markdown-checkbox.markCheckbox",
+        "title": "Markdown: Mark checkbox"
+      },
+      {
+        "command": "markdown-checkbox.showQuickPick",
+        "title": "Markdown: Pick checkboxes"
+      },
+      {
+        "command": "markdown-checkbox.formatTable",
+        "title": "Markdown: Format this table"
+      },
+      {
+        "command": "markdown-checkbox.formatAllTables",
+        "title": "Markdown: Format all tables"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "markdown-checkbox.createCheckbox",
+        "key": "ctrl+shift+c",
+        "mac": "cmd+shift+c",
+        "when": "editorTextFocus && resourceLangId == markdown"
+      },
+      {
+        "command": "markdown-checkbox.markCheckbox",
+        "key": "ctrl+shift+enter",
+        "mac": "cmd+shift+enter",
+        "when": "editorTextFocus && resourceLangId == markdown"
+      },
+      {
+        "command": "markdown-checkbox.onEnterKey",
+        "key": "enter",
+        "when": "editorTextFocus && !editorReadonly && resourceLangId == markdown && !suggestWidgetVisible && config.markdown-checkbox.continueChecklists"
+      },
+      {
+        "command": "markdown-checkbox.onTabKey",
+        "key": "tab",
+        "when": "editorTextFocus && !editorReadonly && resourceLangId == markdown && !suggestWidgetVisible && !inSnippetMode && (config.markdown-checkbox.continueChecklists || config.markdown-checkbox.tableCellNavigation)"
+      },
+      {
+        "command": "markdown-checkbox.onShiftTabKey",
+        "key": "shift+tab",
+        "when": "editorTextFocus && !editorReadonly && resourceLangId == markdown && !inSnippetMode && (config.markdown-checkbox.continueChecklists || config.markdown-checkbox.tableCellNavigation)"
+      },
+      {
+        "command": "markdown-checkbox.onPaste",
+        "key": "ctrl+v",
+        "mac": "cmd+v",
+        "when": "editorTextFocus && !editorReadonly && resourceLangId == markdown && config.markdown-checkbox.dedupePasteMarkers"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "when": "resourceLangId == markdown",
+          "command": "markdown-checkbox.createCheckbox",
+          "alt": "markdown-checkbox.createCheckbox",
+          "group": "markdown-checkbox"
+        },
+        {
+          "when": "resourceLangId == markdown",
+          "command": "markdown-checkbox.markCheckbox",
+          "alt": "markdown-checkbox.markCheckbox",
+          "group": "markdown-checkbox"
+        },
+        {
+          "when": "resourceLangId == markdown",
+          "command": "markdown-checkbox.formatTable",
+          "group": "markdown-checkbox@3"
+        },
+        {
+          "when": "resourceLangId == markdown",
+          "command": "markdown-checkbox.formatAllTables",
+          "group": "markdown-checkbox@4"
+        }
+      ]
+    },
+    "configuration": {
+      "type": "object",
+      "title": "Markdown Checkbox",
+      "properties": {
+        "markdown-checkbox.languages": {
+          "type": "array",
+          "default": [
+            "markdown"
+          ],
+          "description": "The language identifiers for which this extension is activated."
+        },
+        "markdown-checkbox.withBulletPoint": {
+          "type": "boolean",
+          "default": true,
+          "description": "Create a bullet point before the created checkbox."
+        },
+        "markdown-checkbox.typeOfBulletPoint": {
+          "type": "string",
+          "enum": [
+            "*",
+            "-",
+            "+"
+          ],
+          "default": "*",
+          "description": "Bullet point character."
+        },
+        "markdown-checkbox.strikeThroughWhenChecked": {
+          "type": "boolean",
+          "default": true,
+          "description": "Strike through the line of the checkbox after checked."
+        },
+        "markdown-checkbox.italicWhenChecked": {
+          "type": "boolean",
+          "default": true,
+          "description": "Italic font style of line of the checkbox after the checkbox has been checked."
+        },
+        "markdown-checkbox.dateWhenChecked": {
+          "type": "boolean",
+          "default": true,
+          "description": "Add date behind the checkbox item after the checkbox has been checked."
+        },
+        "markdown-checkbox.showStatusBarItem": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show the amount of selected checkboxes in the status bar."
+        },
+        "markdown-checkbox.checkmark": {
+          "type": "string",
+          "enum": [
+            "X",
+            "x"
+          ],
+          "default": "X",
+          "description": "Checkmark of the checkbox."
+        },
+        "markdown-checkbox.dateFormat": {
+          "type": "string",
+          "default": "YYYY-MM-DD",
+          "markdownDescription": "Date format for `dateWhenChecked`, using moment-style tokens: `YYYY`/`YY`, `MMMM`/`MMM`/`MM`/`M`, `DD`/`Do`/`D`, `dddd`/`ddd`, `HH`/`H`/`hh`/`h`, `mm`/`m`, `ss`/`s`, `A`/`a`. Wrap literal text in `[...]`. Examples: `YYYY-MM-DD`, `DD/MM/YYYY`, `ddd, MMM D HH:mm`."
+        },
+        "markdown-checkbox.dateTemplate": {
+          "type": "string",
+          "default": "[{date}]",
+          "markdownDescription": "The date template `{date}` is replaced by the actual date."
+        },
+        "markdown-checkbox.quickPickEscBehavior": {
+          "type": "string",
+          "enum": [
+            "doNothing",
+            "uncheckAll"
+          ],
+          "default": "doNothing",
+          "description": "Behavior when pressing Esc in the QuickPick panel. 'doNothing' preserves current state, 'uncheckAll' unchecks all checkboxes."
+        },
+        "markdown-checkbox.continueChecklists": {
+          "type": "boolean",
+          "default": true,
+          "description": "Continue lists (checkboxes, -/*/+ bullets and numbered lists). Pressing Enter on a list item with text creates a new item on the next line at the same indent. On a line with only an empty list marker, Tab/Shift+Tab indent or de-indent it, and Enter removes one level of indent (or, if already un-indented, removes the marker and moves to the next line)."
+        },
+        "markdown-checkbox.dedupePasteMarkers": {
+          "type": "boolean",
+          "default": true,
+          "description": "When the cursor is parked directly after a bare list marker (e.g. '- ' or '- [ ] '), strip a duplicate leading marker from pasted text so the markers don't stack up."
+        },
+        "markdown-checkbox.tableCellNavigation": {
+          "type": "boolean",
+          "default": true,
+          "description": "Inside a Markdown table, Tab / Shift+Tab move to the next / previous cell (adding a new row when tabbing past the last cell) and reformat the table. Outside a table, Tab / Shift+Tab keep their list-indent behavior."
+        },
+        "markdown-checkbox.autoUpdate": {
+          "type": "string",
+          "enum": [
+            "auto",
+            "prompt",
+            "off"
+          ],
+          "default": "auto",
+          "markdownDescription": "How to handle a newer build found on a `#markdown-checkbox.updateFeeds#`. `auto`: download, install and offer a reload. `prompt`: ask first. `off`: only the **Markdown Checkbox: Check for Updates** command checks."
+        },
+        "markdown-checkbox.updateFeeds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [
+            "https://github.com/will-lottkowitz-prism/markdown-checkbox/releases/latest/download/latest.json"
+          ],
+          "markdownDescription": "Locations of a `latest.json` release manifest, tried in order (first hit wins). Each entry is an `http(s)` URL or a local/synced folder path."
+        },
+        "markdown-checkbox.updateCheckIntervalHours": {
+          "type": "number",
+          "default": 6,
+          "markdownDescription": "Minimum hours between automatic update checks. `0` checks on every activation. The **Check for Updates** command ignores this."
+        }
+      }
+    }
+  },
+  "devDependencies": {
+    "@types/glob": "^7.2.0",
+    "@types/mocha": "^9.1.1",
+    "@types/node": "^18.0.6",
+    "@types/vscode": "^1.75.0",
+    "@typescript-eslint/eslint-plugin": "^5.30.7",
+    "@typescript-eslint/parser": "^5.30.7",
+    "changelog-machine": "^1.0.2",
+    "eslint": "^8.20.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "glob": "^8.0.3",
+    "mocha": "^10.8.2",
+    "ncp": "^2.0.0",
+    "prettier": "^2.7.1",
+    "ts-loader": "^9.3.1",
+    "typescript": "^4.7.4",
+    "vscode-test": "^1.6.1",
+    "webpack": "^5.105.0",
+    "webpack-cli": "^4.10.0",
+    "vitest": "^2.1.9"
+  }
+}

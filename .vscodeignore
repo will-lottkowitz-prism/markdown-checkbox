@@ -1,0 +1,17 @@
+.vscode/**
+.vscode-test/**
+src/**
+out/**
+node_modules/**
+**/*.ts
+**/*.map
+.gitignore
+.editorconfig
+.eslintrc.json
+.eslintignore
+.prettierrc
+.prettierignore
+tsconfig.json
+webpack.config.js
+changelog.config.json
+logo.svg
