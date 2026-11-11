@@ -85,6 +85,7 @@ Two commands (also on the editor right-click menu) format without navigating:
 | ----------------- | ----------------------------------------------------- | ---------------------------------------------- |
 | Create a checkbox | <kbd>CTRL</kbd> + <kbd>Shift</kbd> + <kbd>c</kbd>     | <kbd>⌘</kbd> + <kbd>⇧</kbd> + <kbd>c</kbd>     |
 | Toggle checkbox   | <kbd>CTRL</kbd> + <kbd>Shift</kbd> + <kbd>Enter</kbd> | <kbd>⌘</kbd> + <kbd>⇧</kbd> + <kbd>Enter</kbd> |
+| Toggle checkbox   | <kbd>Alt</kbd> + <kbd>c</kbd>                         | <kbd>Alt</kbd> + <kbd>c</kbd>                  |
 
 While `markdown-checkbox.continueChecklists` is enabled (default), the following keys behave specially on checkbox lines:
 

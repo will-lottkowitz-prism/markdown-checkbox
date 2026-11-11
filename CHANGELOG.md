@@ -8,6 +8,11 @@ Maintained by Will Lotto ([xQx](https://github.com/will-lottkowitz-prism)), fork
 [PKief/vscode-extension-markdown-checkbox](https://github.com/PKief/vscode-extension-markdown-checkbox)
 at v1.10.0. Entries below v1.11.0 are upstream history.
 
+##### 1.11.2 — 2026-11-11
+
+- Made [alt]+c a default keybinding for checking and unchecking a checkbox
+
+
 ##### v1.11.1
 
 > 2026-09-02

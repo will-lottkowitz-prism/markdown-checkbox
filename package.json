@@ -2,7 +2,7 @@
   "name": "markdown-checkbox",
   "displayName": "Markdown Checkbox",
   "description": "Create and toggle checkboxes in Markdown. xQx fork of PKief/vscode-extension-markdown-checkbox.",
-  "version": "1.11.1",
+  "version": "1.11.2",
   "publisher": "xQx",
   "author": {
     "name": "Will Lotto",
@@ -87,6 +87,11 @@
         "command": "markdown-checkbox.markCheckbox",
         "key": "ctrl+shift+enter",
         "mac": "cmd+shift+enter",
+        "when": "editorTextFocus && resourceLangId == markdown"
+      },
+      {
+        "command": "markdown-checkbox.markCheckbox",
+        "key": "alt+c",
         "when": "editorTextFocus && resourceLangId == markdown"
       },
       {
